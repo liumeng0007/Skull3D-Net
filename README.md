@@ -10,3 +10,6 @@ The model weight can be found at https://huggingface.co/mengliu007/best_model/tr
 
 ![Fig 6](https://github.com/user-attachments/assets/116af54c-ae05-4cd3-b6d1-c0a9e761dbb6)
 
+Case example:
+1. get the CT data (dicom FILE);
+2.  
