@@ -66,99 +66,7 @@ class SkullDs(Dataset):
         return self.label_list
 
 
-######################
-#  待重新定义
 
-# train_imgs = image3d_path[:1000]
-# train_label = label_ary[:1000]
-
-# test_imgs = image3d_path[1000:]
-# test_label = label_ary[1000:]
-##############################
-# 待重新定义
-
-# train_ds = SkullDs(train_imgs, train_label)
-# test_ds = SkullDs(test_imgs, test_label)
-
-# train_dl = DataLoader(train_ds, batch_size=1, shuffle=True)
-# test_dl = DataLoader(test_ds, batch_size=1)
-##################################
-
-# img, label = next(iter(train_dl))
-# print(img.shape, label.shape)
-# print(type(img), type(label))
-
-
-# def get_k_fold(k, kf, data, model, loss_fn, optim, exp_lr_scheduler):
-#     # k-fold cross validation
-#
-#     acc_train_mean = 0
-#     loss_train_mean = 0
-#     acc_val_mean = 0
-#     loss_val_mean = 0
-#
-#     for train_index, val_index in kf.split(data):
-#         train_ds = dataset.Subset(data, train_index)
-#         val_ds = dataset.Subset(data, val_index)
-#
-#         train_dl = DataLoader(train_ds, batch_size=1, shuffle=True)
-#         val_dl = DataLoader(val_ds, batch_size=1)
-#
-#         num_correct = 0
-#         num_total = 0
-#         running_loss = 0
-#         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-#         model = model.to(device)
-#
-#         model.train()
-#         for x, y in tqdm(train_dl):
-#             # x, y = torch.from_numpy(x), torch.from_numpy(y)
-#             x = x.to(device)
-#             y = y.to(device)
-#             y_train_pred = model(x)
-#             loss = loss_fn(y_train_pred, y)
-#             optim.zero_grad()
-#             loss.backward()
-#             optim.step()
-#             with torch.no_grad():
-#                 y_train_pred = torch.argmax(y_train_pred, dim=1)  # 返回一个包含最大值索引位置的张量
-#                 # print("y_train_pred:", y_train_pred)
-#                 num_correct += (y_train_pred == y).sum().item()
-#                 num_total += y.size(0)
-#                 running_loss += loss.item()
-#         exp_lr_scheduler.step()
-#         train_acc = num_correct / num_total
-#         print("train_acc:", train_acc)
-#         train_loss = running_loss / len(train_dl.dataset)
-#
-#         acc_train_mean += train_acc
-#         print("acc_train_acc:", acc_train_mean)
-#         loss_train_mean += train_loss
-#
-#         num_correct_test = 0
-#         num_total_test = 0
-#         running_loss_test = 0
-#         model.eval()
-#         with torch.no_grad():
-#             for x, y in tqdm(val_dl):
-#                 x = x.to(device)
-#                 y = y.to(device)
-#                 y_test_pred = model(x)
-#                 loss = loss_fn(y_test_pred, y)
-#                 y_test_pred = torch.argmax(y_test_pred, dim=1)
-#                 num_correct_test += (y_test_pred == y).sum().item()
-#                 num_total_test += y.size(0)
-#                 running_loss_test += loss.item()
-#
-#         test_acc = num_correct_test / num_total_test
-#         print("test_acc:", test_acc)
-#         test_loss = running_loss_test / len(val_dl.dataset)
-#
-#         acc_val_mean += test_acc
-#         print("acc_val_mean:", acc_val_mean)
-#         loss_val_mean += test_loss
-#
-#     return loss_train_mean/k, acc_train_mean/k, loss_val_mean/k, acc_val_mean/k
 def fit_net(model, train_dataloader, test_dataloader, test_dataset, loss_fn, optim, exp_lr_scheduler):
     """
     regression: 计算MAE/MSE/RMSE/MPE/R_2
@@ -290,5 +198,3 @@ def main():
         fold += 1
 
 
-if __name__ == '__main__':
-    main()
